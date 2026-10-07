@@ -1,0 +1,100 @@
+{
+  "edges": [
+    {
+      "from": "user",
+      "id": "user-api_gateway-0",
+      "kind": "routes_to",
+      "props": {},
+      "to": "api_gateway"
+    },
+    {
+      "from": "api_gateway",
+      "id": "api_gateway-lambda-0",
+      "kind": "routes_to",
+      "props": {},
+      "to": "lambda"
+    },
+    {
+      "from": "lambda",
+      "id": "lambda-s3_bucket-0",
+      "kind": "uses",
+      "props": {},
+      "to": "s3_bucket"
+    },
+    {
+      "from": "iam_role",
+      "id": "lambda-iam_role-0",
+      "kind": "describes",
+      "props": {},
+      "to": "lambda"
+    }
+  ],
+  "groups": [
+    {
+      "id": "dev",
+      "kind": "environment",
+      "name": "quote-of-the-day-dev",
+      "ref": {
+        "id": "env_01a11642fb044ef42711692c4c74a3ef",
+        "kind": "environment"
+      }
+    }
+  ],
+  "nodes": [
+    {
+      "group": null,
+      "id": "user",
+      "name": "Browser / API client",
+      "props": {},
+      "type": "external.user"
+    },
+    {
+      "group": "dev",
+      "id": "api_gateway",
+      "name": "API Gateway HTTP API",
+      "props": {
+        "name": "quote-of-the-day-http-api",
+        "protocol": "HTTP",
+        "region": "us-east-1",
+        "stage": "$default"
+      },
+      "type": "resource.gateway"
+    },
+    {
+      "group": "dev",
+      "id": "lambda",
+      "name": "quote-of-the-day",
+      "props": {
+        "memory_mb": 128,
+        "runtime_version": "python3.12",
+        "timeout_s": 10
+      },
+      "type": "service.serverless"
+    },
+    {
+      "group": "dev",
+      "id": "s3_bucket",
+      "name": "quotes S3 bucket",
+      "props": {
+        "name": "quote-of-the-day-dev-quotes",
+        "versioning": "off"
+      },
+      "type": "resource.bucket"
+    },
+    {
+      "group": "dev",
+      "id": "iam_role",
+      "name": "Lambda IAM role",
+      "props": {
+        "name": "quote-of-the-day-lambda-role",
+        "region": "us-east-1"
+      },
+      "type": "resource.identity"
+    }
+  ],
+  "scope": {
+    "id": "svc_01a11642fafc628af39a51e93809ff28",
+    "kind": "service"
+  },
+  "version": 1
+}
